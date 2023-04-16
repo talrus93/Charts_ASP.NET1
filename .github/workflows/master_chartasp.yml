@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'chartasp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BC0BE02B4E2A4F08B6C31B384CC84108 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_96623C340538413FB106A99B83D9A25D }}
           package: .
