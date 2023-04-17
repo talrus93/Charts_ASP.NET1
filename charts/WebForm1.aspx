@@ -15,26 +15,36 @@
     <%--This section contains a Doughnut chart created using DevExpress.XtraCharts libraries. 
         The chart data is obtained from the SQLDataSource control. 
         The chart can be double-clicked to open another page containing a Gantt chart. --%>
-    <dx:WebChartControl ID="WebChartControl1" runat="server" CrosshairEnabled="True" DataSourceID="SqlDataSource1" Height="670px" Width="1200px" AppearanceNameSerializable="Northern Lights" IndicatorsPaletteName="Violet" PaletteName="Blue Green" ondblclick="openGanttDiagram()">
+    <dx:WebChartControl ID="WebChartControl1" runat="server" CrosshairEnabled="True" DataSourceID="SqlDataSource1" Height="670px" Width="1200px" AppearanceNameSerializable="Northern Lights" IndicatorsPaletteName="Violet" PaletteName="Blue Green" ondblclick="openGanttDiagram()" SelectionMode="Single" SeriesSelectionMode="Argument">
+        <BorderOptions Visibility="True"></BorderOptions>
+
+        <FillStyle FillMode="Empty"></FillStyle>
+
         <Legend Visibility="True">
             <Border Color="Transparent"></Border>
         </Legend>
         <SeriesSerializable>
-            <dx:Series Name="Series 1" ArgumentDataMember="CountryName" ValueDataMembersSerializable="Revenue" LabelsVisibility="True">
+            <dx:Series Name="Series 1" ArgumentDataMember="CountryName" ValueDataMembersSerializable="Revenue" LabelsVisibility="True" ColorDataMember="CountryName" ToolTipHintDataMember="CountryName" ToolTipEnabled="True">
                 <ViewSerializable>
                     <dx:DoughnutSeriesView>
+                        <TotalLabel TextPattern="Total revenue
+{TV:#.00}"
+                            Visible="True" DXFont="Roboto, 16pt" Tag="">
+                            <Border Visibility="True"></Border>
+                        </TotalLabel>
                         <Titles>
                             <dx:SeriesTitle Indent="29" Text="Revenue by countries" DXFont="Roboto, 16pt" TextColor="0, 0, 0"></dx:SeriesTitle>
                         </Titles>
                     </dx:DoughnutSeriesView>
                 </ViewSerializable>
                 <LabelSerializable>
-                    <dx:DoughnutSeriesLabel DXFont="Tahoma, 16pt"></dx:DoughnutSeriesLabel>
+                    <dx:DoughnutSeriesLabel DXFont="Tahoma, 16pt" TextPattern="{HINT} {VP:0%}" Position="TwoColumns" LineLength="8" LineVisibility="True" TextAlignment="Near"></dx:DoughnutSeriesLabel>
                 </LabelSerializable>
             </dx:Series>
-
         </SeriesSerializable>
+        <SeriesTemplate ArgumentDataMember="CountryID"></SeriesTemplate>
     </dx:WebChartControl>
+
     <asp:SqlDataSource runat="server" ID="SqlDataSource1" ConnectionString='<%$ ConnectionStrings:NorthwindConnectionString %>' SelectCommand="SELECT * FROM [Countries]"></asp:SqlDataSource>
 </asp:Content>
 
@@ -45,6 +55,7 @@
         The function redirects the user to a new web page named 'WebForm3.aspx' where another chart (Gantt diagram) is located.--%>
     <script type="text/javascript">
         function openGanttDiagram() {
+
             location.href = "WebForm3.aspx";
         }
     </script>
